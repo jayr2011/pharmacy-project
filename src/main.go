@@ -10,6 +10,7 @@ import (
 
 type Info struct {
 	Nome string `json:"nome"`
+	Mg   string `json:"mg"`
 }
 
 func main() {
@@ -26,23 +27,26 @@ func initialization() int {
 
 func addMedicamento() {
 	var medicamento string
+	var mg string
 	switch initialization() {
 	case 1:
 		fmt.Println("digite o nome do medicamente a ser adicionado")
 		fmt.Scanln(&medicamento)
+		fmt.Println("digite a quantidade de mg do medicamento")
+		fmt.Scanln(&mg)
 	case 0:
 		fmt.Println("saindo do programa")
 		os.Exit(0)
 	}
 
-	info := Info{Nome: medicamento}
+	info := Info{Nome: medicamento, Mg: mg}
 
-	jsonData, err := json.Marshal(info)
+	dadosDoJson, err := json.Marshal(info)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = ioutil.WriteFile("remedios.json", jsonData, 0644)
+	err = ioutil.WriteFile("remedios.json", dadosDoJson, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
